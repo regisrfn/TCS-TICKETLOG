@@ -1,9 +1,10 @@
-# ITEM - API
-Spring boot rest api
+# TICKET - API
+Api - Spring boot
 
-## PREREQUISITES
+## PRE-REQUISITOS
 - Java
-- Docker | https://docs.docker.com/engine/install/ubuntu/ 
+- Banco de dados Postgres ou 
+- Usar banco postgres atraves do Docker | https://docs.docker.com/engine/install/ubuntu/ 
 
 ## DOCKER
 - RUNNING POSTGRES
