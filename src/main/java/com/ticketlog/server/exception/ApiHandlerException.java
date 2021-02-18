@@ -1,4 +1,4 @@
-package com.rufino.server.exception;
+package com.ticketlog.server.exception;
 
 import java.time.ZonedDateTime;
 import java.util.HashMap;

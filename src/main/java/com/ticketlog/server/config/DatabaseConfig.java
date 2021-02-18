@@ -1,4 +1,4 @@
-package com.rufino.server.config;
+package com.ticketlog.server.config;
 
 import java.net.URI;
 import java.net.URISyntaxException;

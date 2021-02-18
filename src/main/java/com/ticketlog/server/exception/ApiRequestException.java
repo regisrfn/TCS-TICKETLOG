@@ -1,4 +1,4 @@
-package com.rufino.server.exception;
+package com.ticketlog.server.exception;
 
 import org.springframework.http.HttpStatus;
 
