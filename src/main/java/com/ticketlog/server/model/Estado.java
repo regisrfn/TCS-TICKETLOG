@@ -42,5 +42,6 @@ public class Estado {
     public Estado() {
         setId(UUID.randomUUID());
         setCustoEstadoUs(0.0);
+        setPopulacao(0L);
     }
 }

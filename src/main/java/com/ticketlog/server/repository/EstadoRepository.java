@@ -1,4 +1,5 @@
 package com.ticketlog.server.repository;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -51,5 +52,19 @@ public class EstadoRepository implements EstadoDao {
     public Estado updateEstado(UUID id, Estado Estado) {
         Estado.setId(id);
         return jpaDataAccess.save(Estado);
+    }
+
+    // retorna null se o estado não foi encontrado
+    @Override
+    public Estado updatePopulacao(Estado estado, Long populacao) {
+        Long novaPopulacao = populacao + estado.getPopulacao();
+        estado.setPopulacao(novaPopulacao);
+        return jpaDataAccess.save(estado);
+    }
+
+    @Override
+    public Estado updateCustoPorPessoa(Estado estado, Double custo) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

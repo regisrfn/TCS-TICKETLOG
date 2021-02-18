@@ -1,4 +1,5 @@
 package com.ticketlog.server.api;
+
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +58,11 @@ public class EstadoController {
     @PutMapping("update/{id}")
     public Estado updateEstado(@PathVariable String id, @Valid @RequestBody Estado estado) {
         return estadoService.updateEstado(id, estado);
+    }
+
+    @PutMapping("update/{id}/populacao")
+    public Estado updateEstadoPopulacao(@PathVariable String id, @RequestBody Estado estado) {
+        return estadoService.updatePopulacao(id, estado.getPopulacao());
     }
 
 }

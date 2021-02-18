@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.ticketlog.server.model.Estado;
 
 public interface EstadoDao {
-    Estado insertEstado(Estado Estado);
+    Estado insertEstado(Estado estado);
 
     boolean deleteEstadoById(UUID id);
 
@@ -14,5 +14,9 @@ public interface EstadoDao {
 
     Estado getEstado(UUID id);
 
-    Estado updateEstado(UUID id, Estado Estado);
+    Estado updateEstado(UUID id, Estado estado);
+
+    Estado updatePopulacao(Estado estado, Long populacao);
+
+    Estado updateCustoPorPessoa(Estado estado, Double custo);
 }

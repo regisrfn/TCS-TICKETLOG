@@ -2,6 +2,7 @@ package com.ticketlog.server;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,7 +22,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PostRequestTests {
+public class PutRequestTests {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -36,20 +37,26 @@ public class PostRequestTests {
     }
 
     @Test
-    void itShouldSaveEstado() throws Exception {
+    void itShouldUpdateEstado_populacao() throws Exception {
         JSONObject my_obj = new JSONObject();
 
         my_obj.put("id", "1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db");
         my_obj.put("nome", "Santa Catarina");
+        my_obj.put("populacao", 50000);
 
-        MvcResult result = mockMvc
-                .perform(post("/api/v1/estado/save").contentType(MediaType.APPLICATION_JSON)
-                        .content(my_obj.toString())).andExpect(status().isOk())
-                .andReturn();
+        mockMvc.perform(post("/api/v1/estado/save").contentType(MediaType.APPLICATION_JSON).content(my_obj.toString()))
+                .andExpect(status().isOk()).andReturn();
+
+        my_obj = new JSONObject();
+        my_obj.put("populacao", "1");
+
+        MvcResult result = mockMvc.perform(
+                put("/api/v1/estado/update/1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db/populacao").contentType(MediaType.APPLICATION_JSON).content(my_obj.toString()))
+                .andExpect(status().isOk()).andReturn();
 
         Estado response = objectMapper.readValue(result.getResponse().getContentAsString(), Estado.class);
         assertThat(response.getNome()).isEqualTo("Santa Catarina");
-        assertThat(response.getPopulacao()).isEqualTo(0);
+        assertThat(response.getPopulacao()).isEqualTo(50001);
         assertThat(response.getId().toString()).isEqualTo("1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db");
     }
 }

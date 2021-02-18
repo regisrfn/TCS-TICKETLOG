@@ -14,39 +14,40 @@ import org.springframework.stereotype.Service;
 @Service
 public class EstadoService {
 
-    private EstadoDao userDao;
+    private EstadoDao estadoDao;
 
     @Autowired
-    public EstadoService(EstadoDao userDao) {
-        this.userDao = userDao;
+    public EstadoService(EstadoDao estadoDao) {
+        this.estadoDao = estadoDao;
     }
 
-    public Estado saveEstado(Estado user) {        
+    public Estado saveEstado(Estado estado) {
         try {
-            return userDao.insertEstado(user);
+            return estadoDao.insertEstado(estado);
         } catch (Exception e) {
             e.printStackTrace();
             throw new ApiRequestException("Estado não pode ser salvo", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
+
     }
 
     public List<Estado> getAllEstados() {
         try {
-            return userDao.getAll();
+            return estadoDao.getAll();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new ApiRequestException("Listagem dos estados não pode ser efetuada", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ApiRequestException("Listagem dos estados não pode ser efetuada",
+                    HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     public Estado getEstadoById(String id) {
         try {
-            UUID userId = UUID.fromString(id);
-            Estado user = userDao.getEstado(userId);
-            if (user == null)
+            UUID estadoId = UUID.fromString(id);
+            Estado estado = estadoDao.getEstado(estadoId);
+            if (estado == null)
                 throw new ApiRequestException("Estado não encontrado", HttpStatus.NOT_FOUND);
-            return user;
+            return estado;
         } catch (IllegalArgumentException e) {
             throw new ApiRequestException("Formato de id invalido", HttpStatus.BAD_REQUEST);
         }
@@ -55,8 +56,8 @@ public class EstadoService {
 
     public boolean deleteEstadoById(String id) {
         try {
-            UUID userId = UUID.fromString(id);
-            boolean ok = userDao.deleteEstadoById(userId);
+            UUID estadoId = UUID.fromString(id);
+            boolean ok = estadoDao.deleteEstadoById(estadoId);
             if (!ok)
                 throw new ApiRequestException("Estado não encontrado", HttpStatus.NOT_FOUND);
             return ok;
@@ -65,15 +66,27 @@ public class EstadoService {
         }
     }
 
-    public Estado updateEstado(String id, Estado user) {
+    public Estado updateEstado(String id, Estado estado) {
         try {
-            UUID userId = UUID.fromString(id);
-            return userDao.updateEstado(userId, user);
+            UUID estadoId = UUID.fromString(id);
+            return estadoDao.updateEstado(estadoId, estado);
         } catch (IllegalArgumentException e) {
             throw new ApiRequestException("Formato de id invalido", HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             e.printStackTrace();
             throw new ApiRequestException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public Estado updatePopulacao(String id, Long populacao) {
+        try {
+            UUID estadoId = UUID.fromString(id);
+            Estado estado = estadoDao.getEstado(estadoId);
+            if (estado == null)
+                throw new ApiRequestException("Estado não encontrado", HttpStatus.NOT_FOUND);
+            return estadoDao.updatePopulacao(estado, populacao);
+        } catch (IllegalArgumentException e) {
+            throw new ApiRequestException("Formato de id invalido", HttpStatus.BAD_REQUEST);
         }
     }
 }
