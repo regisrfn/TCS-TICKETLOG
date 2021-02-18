@@ -64,7 +64,8 @@ public class EstadoRepository implements EstadoDao {
 
     @Override
     public Estado updateCustoPorPessoa(Estado estado, Double custo) {
-        // TODO Auto-generated method stub
-        return null;
+        Double novoCusto = custo + estado.getCustoEstadoUs();
+        estado.setCustoEstadoUs(novoCusto);
+        return jpaDataAccess.save(estado);
     }
 }

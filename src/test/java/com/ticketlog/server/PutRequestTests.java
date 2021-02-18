@@ -59,4 +59,28 @@ public class PutRequestTests {
         assertThat(response.getPopulacao()).isEqualTo(50001);
         assertThat(response.getId().toString()).isEqualTo("1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db");
     }
+
+    @Test
+    void itShouldUpdateEstado_custo() throws Exception {
+        JSONObject my_obj = new JSONObject();
+
+        my_obj.put("id", "1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db");
+        my_obj.put("nome", "Santa Catarina");
+        my_obj.put("custoEstadoUs", 10.99);
+
+        mockMvc.perform(post("/api/v1/estado/save").contentType(MediaType.APPLICATION_JSON).content(my_obj.toString()))
+                .andExpect(status().isOk()).andReturn();
+
+        my_obj = new JSONObject();
+        my_obj.put("custoEstadoUs", 0.01);
+
+        MvcResult result = mockMvc.perform(
+                put("/api/v1/estado/update/1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db/custo").contentType(MediaType.APPLICATION_JSON).content(my_obj.toString()))
+                .andExpect(status().isOk()).andReturn();
+
+        Estado response = objectMapper.readValue(result.getResponse().getContentAsString(), Estado.class);
+        assertThat(response.getNome()).isEqualTo("Santa Catarina");
+        assertThat(response.getCustoEstadoUs()).isEqualTo(11.0);
+        assertThat(response.getId().toString()).isEqualTo("1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db");
+    }
 }

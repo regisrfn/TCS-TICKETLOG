@@ -89,4 +89,16 @@ public class EstadoService {
             throw new ApiRequestException("Formato de id invalido", HttpStatus.BAD_REQUEST);
         }
     }
+
+    public Estado updateCusto(String id, Double custo) {
+        try {
+            UUID estadoId = UUID.fromString(id);
+            Estado estado = estadoDao.getEstado(estadoId);
+            if (estado == null)
+                throw new ApiRequestException("Estado não encontrado", HttpStatus.NOT_FOUND);
+            return estadoDao.updateCustoPorPessoa(estado, custo);
+        } catch (IllegalArgumentException e) {
+            throw new ApiRequestException("Formato de id invalido", HttpStatus.BAD_REQUEST);
+        }
+    }
 }
