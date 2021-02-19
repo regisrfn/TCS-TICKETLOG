@@ -1,11 +1,11 @@
 package com.ticketlog.server.repository;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.ticketlog.server.dao.EstadoDao;
 import com.ticketlog.server.dao.JpaDao;
 import com.ticketlog.server.model.Estado;
+import com.ticketlog.server.model.Estado.UF;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -28,7 +28,7 @@ public class EstadoRepository implements EstadoDao {
     }
 
     @Override
-    public boolean deleteEstadoById(UUID id) {
+    public boolean deleteEstadoById(UF id) {
         try {
             jpaDataAccess.deleteById(id);
             return true;
@@ -44,12 +44,12 @@ public class EstadoRepository implements EstadoDao {
     }
 
     @Override
-    public Estado getEstado(UUID id) {
+    public Estado getEstado(UF id) {
         return jpaDataAccess.findById(id).orElse(null);
     }
 
     @Override
-    public Estado updateEstado(UUID id, Estado Estado) {
+    public Estado updateEstado(UF id, Estado Estado) {
         Estado.setId(id);
         return jpaDataAccess.save(Estado);
     }
@@ -63,7 +63,7 @@ public class EstadoRepository implements EstadoDao {
     }
 
     @Override
-    public Estado updateCustoPorPessoa(Estado estado, Double custo) {
+    public Estado updateCustoEstado(Estado estado, Double custo) {
         Double novoCusto = custo + estado.getCustoEstadoUs();
         estado.setCustoEstadoUs(novoCusto);
         return jpaDataAccess.save(estado);

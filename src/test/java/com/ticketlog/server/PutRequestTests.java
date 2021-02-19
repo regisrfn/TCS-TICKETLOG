@@ -40,7 +40,7 @@ public class PutRequestTests {
     void itShouldUpdateEstado_populacao() throws Exception {
         JSONObject my_obj = new JSONObject();
 
-        my_obj.put("id", "1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db");
+        my_obj.put("id", "SC");
         my_obj.put("nome", "Santa Catarina");
         my_obj.put("populacao", 50000);
 
@@ -51,20 +51,20 @@ public class PutRequestTests {
         my_obj.put("populacao", "1");
 
         MvcResult result = mockMvc.perform(
-                put("/api/v1/estado/update/1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db/populacao").contentType(MediaType.APPLICATION_JSON).content(my_obj.toString()))
+                put("/api/v1/estado/update/SC/populacao").contentType(MediaType.APPLICATION_JSON).content(my_obj.toString()))
                 .andExpect(status().isOk()).andReturn();
 
         Estado response = objectMapper.readValue(result.getResponse().getContentAsString(), Estado.class);
         assertThat(response.getNome()).isEqualTo("Santa Catarina");
         assertThat(response.getPopulacao()).isEqualTo(50001);
-        assertThat(response.getId().toString()).isEqualTo("1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db");
+        assertThat(response.getId().toString()).isEqualTo("SC");
     }
 
     @Test
     void itShouldUpdateEstado_custo() throws Exception {
         JSONObject my_obj = new JSONObject();
 
-        my_obj.put("id", "1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db");
+        my_obj.put("id", "SC");
         my_obj.put("nome", "Santa Catarina");
         my_obj.put("custoEstadoUs", 10.99);
 
@@ -75,7 +75,7 @@ public class PutRequestTests {
         my_obj.put("custoEstadoUs", 0.01);
 
         MvcResult result = mockMvc.perform(
-                put("/api/v1/estado/update/1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db/custo").contentType(MediaType.APPLICATION_JSON).content(my_obj.toString()))
+                put("/api/v1/estado/update/SC/custo").contentType(MediaType.APPLICATION_JSON).content(my_obj.toString()))
                 .andExpect(status().isOk()).andReturn();
 
         Estado response = objectMapper.readValue(result.getResponse().getContentAsString(), Estado.class);

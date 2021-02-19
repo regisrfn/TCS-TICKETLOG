@@ -1,11 +1,11 @@
 package com.ticketlog.server.service;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.ticketlog.server.dao.EstadoDao;
 import com.ticketlog.server.exception.ApiRequestException;
 import com.ticketlog.server.model.Estado;
+import com.ticketlog.server.model.Estado.UF;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +43,7 @@ public class EstadoService {
 
     public Estado getEstadoById(String id) {
         try {
-            UUID estadoId = UUID.fromString(id);
+            UF estadoId = UF.valueOf(id);
             Estado estado = estadoDao.getEstado(estadoId);
             if (estado == null)
                 throw new ApiRequestException("Estado não encontrado", HttpStatus.NOT_FOUND);
@@ -56,7 +56,7 @@ public class EstadoService {
 
     public boolean deleteEstadoById(String id) {
         try {
-            UUID estadoId = UUID.fromString(id);
+            UF estadoId = UF.valueOf(id);
             boolean ok = estadoDao.deleteEstadoById(estadoId);
             if (!ok)
                 throw new ApiRequestException("Estado não encontrado", HttpStatus.NOT_FOUND);
@@ -68,7 +68,7 @@ public class EstadoService {
 
     public Estado updateEstado(String id, Estado estado) {
         try {
-            UUID estadoId = UUID.fromString(id);
+            UF estadoId = UF.valueOf(id);
             return estadoDao.updateEstado(estadoId, estado);
         } catch (IllegalArgumentException e) {
             throw new ApiRequestException("Formato de id invalido", HttpStatus.BAD_REQUEST);
@@ -80,7 +80,7 @@ public class EstadoService {
 
     public Estado updatePopulacao(String id, Long populacao) {
         try {
-            UUID estadoId = UUID.fromString(id);
+            UF estadoId = UF.valueOf(id);
             Estado estado = estadoDao.getEstado(estadoId);
             if (estado == null)
                 throw new ApiRequestException("Estado não encontrado", HttpStatus.NOT_FOUND);
@@ -92,11 +92,11 @@ public class EstadoService {
 
     public Estado updateCusto(String id, Double custo) {
         try {
-            UUID estadoId = UUID.fromString(id);
+            UF estadoId = UF.valueOf(id);
             Estado estado = estadoDao.getEstado(estadoId);
             if (estado == null)
                 throw new ApiRequestException("Estado não encontrado", HttpStatus.NOT_FOUND);
-            return estadoDao.updateCustoPorPessoa(estado, custo);
+            return estadoDao.updateCustoEstado(estado, custo);
         } catch (IllegalArgumentException e) {
             throw new ApiRequestException("Formato de id invalido", HttpStatus.BAD_REQUEST);
         }

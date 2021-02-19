@@ -1,7 +1,5 @@
 package com.ticketlog.server.model;
 
-import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,15 +17,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "estados", uniqueConstraints = { 
-    @UniqueConstraint(columnNames = "nome", name = "uk_estado_nome") 
-})
+@Table(name = "estados", uniqueConstraints = { @UniqueConstraint(columnNames = "nome", name = "uk_estado_nome") })
 
 @JsonInclude(Include.NON_NULL)
 public class Estado {
-    
+
     @Id
-    private UUID id;
+    private UF id;
 
     @NotBlank(message = "Campo não deve ser vazio")
     @Column(nullable = false)
@@ -39,9 +35,28 @@ public class Estado {
     @NotNull(message = "Campo não deve ser vazio")
     private Double custoEstadoUs;
 
-    public Estado() {
-        setId(UUID.randomUUID());
-        setCustoEstadoUs(0.0);
+    public Estado(){
         setPopulacao(0L);
+        setCustoEstadoUs(0.0);
+    }
+
+    public void setId(String id) {
+        try {
+            this.id = UF.valueOf(id.toUpperCase());
+        } catch (Exception e) {
+            this.id = null;
+        }
+    }
+
+    public void setId(UF id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return this.id.toString();
+    }
+
+    public enum UF {
+        SC, PR, RS
     }
 }

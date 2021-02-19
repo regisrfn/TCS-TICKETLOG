@@ -39,7 +39,7 @@ public class PostRequestTests {
     void itShouldSaveEstado() throws Exception {
         JSONObject my_obj = new JSONObject();
 
-        my_obj.put("id", "1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db");
+        my_obj.put("id", "SC");
         my_obj.put("nome", "Santa Catarina");
 
         MvcResult result = mockMvc
@@ -50,6 +50,6 @@ public class PostRequestTests {
         Estado response = objectMapper.readValue(result.getResponse().getContentAsString(), Estado.class);
         assertThat(response.getNome()).isEqualTo("Santa Catarina");
         assertThat(response.getPopulacao()).isEqualTo(0);
-        assertThat(response.getId().toString()).isEqualTo("1297fbcc-b97c-4d7d-a5a9-f34bcf3be0db");
+        assertThat(response.getId().toString()).isEqualTo("SC");
     }
 }
