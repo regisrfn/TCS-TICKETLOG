@@ -59,15 +59,4 @@ public class EstadoController {
     public Estado updateEstado(@PathVariable String id, @Valid @RequestBody Estado estado) {
         return estadoService.updateEstado(id, estado);
     }
-
-    @PutMapping("update/{id}/populacao")
-    public Estado updateEstadoPopulacao(@PathVariable String id, @RequestBody Estado estado) {
-        return estadoService.updatePopulacao(id, estado.getPopulacao());
-    }
-
-    @PutMapping("update/{id}/custo")
-    public Estado updateEstadoCusto(@PathVariable String id, @RequestBody Estado estado) {
-        return estadoService.updateCusto(id, estado.getCustoEstadoUs());
-    }
-
 }

@@ -77,28 +77,4 @@ public class EstadoService {
             throw new ApiRequestException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    public Estado updatePopulacao(String id, Long populacao) {
-        try {
-            UF estadoId = UF.valueOf(id);
-            Estado estado = estadoDao.getEstado(estadoId);
-            if (estado == null)
-                throw new ApiRequestException("Estado não encontrado", HttpStatus.NOT_FOUND);
-            return estadoDao.updatePopulacao(estado, populacao);
-        } catch (IllegalArgumentException e) {
-            throw new ApiRequestException("Formato de id invalido", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    public Estado updateCusto(String id, Double custo) {
-        try {
-            UF estadoId = UF.valueOf(id);
-            Estado estado = estadoDao.getEstado(estadoId);
-            if (estado == null)
-                throw new ApiRequestException("Estado não encontrado", HttpStatus.NOT_FOUND);
-            return estadoDao.updateCustoEstado(estado, custo);
-        } catch (IllegalArgumentException e) {
-            throw new ApiRequestException("Formato de id invalido", HttpStatus.BAD_REQUEST);
-        }
-    }
 }
