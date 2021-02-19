@@ -1,10 +1,15 @@
 package com.ticketlog.server.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -25,17 +30,27 @@ public class Estado {
     @Id
     private UF id;
 
-    @NotBlank(message = "Campo não deve ser vazio")
+    @NotBlank(message = "Campo nao deve ser vazio")
     @Column(nullable = false)
     private String nome;
 
-    @NotNull(message = "Campo não deve ser vazio")
+    @NotNull(message = "Campo nao deve ser vazio")
+    @Min(value = 0, message = "Populacao deve ser maior ou igual a zero")
     private Long populacao;
 
-    @NotNull(message = "Campo não deve ser vazio")
+    @NotNull(message = "Campo nao deve ser vazio")
     private Double custoEstadoUs;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Cidade> cidadesList;
+
     public Estado(){
+        setPopulacao(0L);
+        setCustoEstadoUs(0.0);
+    }
+
+    public Estado(String id){
+        setId(id);
         setPopulacao(0L);
         setCustoEstadoUs(0.0);
     }

@@ -2,6 +2,7 @@ package com.ticketlog.server.dao;
 
 import java.util.List;
 
+import com.ticketlog.server.model.Cidade;
 import com.ticketlog.server.model.Estado;
 import com.ticketlog.server.model.Estado.UF;
 
@@ -16,7 +17,12 @@ public interface EstadoDao {
 
     Estado updateEstado(UF id, Estado estado);
 
+    Estado saveCidade(Estado estado, Cidade cidade);
+
+    /////////////////////////////////////////////////////
     Estado updatePopulacao(Estado estado, Long populacao);
 
     Estado updateCustoEstado(Estado estado, Double custo);
+
+    
 }

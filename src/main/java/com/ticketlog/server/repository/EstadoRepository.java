@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ticketlog.server.dao.EstadoDao;
 import com.ticketlog.server.dao.JpaDao;
+import com.ticketlog.server.model.Cidade;
 import com.ticketlog.server.model.Estado;
 import com.ticketlog.server.model.Estado.UF;
 
@@ -67,5 +68,11 @@ public class EstadoRepository implements EstadoDao {
         Double novoCusto = custo + estado.getCustoEstadoUs();
         estado.setCustoEstadoUs(novoCusto);
         return jpaDataAccess.save(estado);
+    }
+
+    @Override
+    public Estado saveCidade(Estado estado, Cidade cidade) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
