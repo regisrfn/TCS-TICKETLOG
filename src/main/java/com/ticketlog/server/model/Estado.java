@@ -1,5 +1,6 @@
 package com.ticketlog.server.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -42,7 +43,7 @@ public class Estado {
     private Double custoEstadoUs;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cidade> cidadesList;
+    private List<Cidade> cidadesList = new ArrayList<>();
 
     public Estado(){
         setPopulacao(0L);

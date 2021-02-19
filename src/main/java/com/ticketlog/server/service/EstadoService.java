@@ -41,22 +41,24 @@ public class EstadoService {
         }
     }
 
-    public Estado getEstadoById(String id) {
+    public Estado getEstadoById(String estadoUf) {
         try {
-            UF estadoId = UF.valueOf(id);
+            UF estadoId = UF.valueOf(estadoUf.toUpperCase());
             Estado estado = estadoDao.getEstado(estadoId);
             if (estado == null)
                 throw new ApiRequestException("Estado não encontrado", HttpStatus.NOT_FOUND);
+                estado.getCidadesList();
             return estado;
         } catch (IllegalArgumentException e) {
+            e.printStackTrace();
             throw new ApiRequestException("Formato de id invalido", HttpStatus.BAD_REQUEST);
         }
 
     }
 
-    public boolean deleteEstadoById(String id) {
+    public boolean deleteEstadoById(String estadoUf) {
         try {
-            UF estadoId = UF.valueOf(id);
+            UF estadoId = UF.valueOf(estadoUf.toUpperCase());
             boolean ok = estadoDao.deleteEstadoById(estadoId);
             if (!ok)
                 throw new ApiRequestException("Estado não encontrado", HttpStatus.NOT_FOUND);
@@ -68,7 +70,7 @@ public class EstadoService {
 
     public Estado updateEstado(String id, Estado estado) {
         try {
-            UF estadoId = UF.valueOf(id);
+            UF estadoId = UF.valueOf(id.toUpperCase());
             return estadoDao.updateEstado(estadoId, estado);
         } catch (IllegalArgumentException e) {
             throw new ApiRequestException("Formato de id invalido", HttpStatus.BAD_REQUEST);
@@ -77,4 +79,6 @@ public class EstadoService {
             throw new ApiRequestException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    
 }

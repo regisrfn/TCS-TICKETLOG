@@ -4,10 +4,9 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.DecimalMin;
@@ -39,8 +38,8 @@ public class Cidade {
     @DecimalMin(value = "0.0")
     private Double CustoCidadeUs;
 
-    @NotNull(message = "Invalid customer id format")
-    @OneToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "UF invalido")
+    @ManyToOne
     @JoinColumn(name = "idEstado", referencedColumnName = "id")
     private Estado estado;
 
