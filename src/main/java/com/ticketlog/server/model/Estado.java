@@ -1,13 +1,8 @@
 package com.ticketlog.server.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
@@ -24,7 +19,6 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "estados", uniqueConstraints = { @UniqueConstraint(columnNames = "nome", name = "uk_estado_nome") })
-
 @JsonInclude(Include.NON_NULL)
 public class Estado {
 
@@ -41,9 +35,6 @@ public class Estado {
 
     @NotNull(message = "Campo nao deve ser vazio")
     private Double custoEstadoUs;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cidade> cidadesList = new ArrayList<>();
 
     public Estado(){
         setPopulacao(0L);

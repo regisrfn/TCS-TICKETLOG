@@ -1,9 +1,9 @@
 package com.ticketlog.server;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -34,6 +34,7 @@ public class GetByIdRequests {
     @BeforeEach
     void clearTable() {
         jdbcTemplate.update("DELETE FROM estados");
+        jdbcTemplate.update("DELETE FROM cidades");
     }
 
     @Test
@@ -46,8 +47,18 @@ public class GetByIdRequests {
         mockMvc.perform(post("/api/v1/estado/save").contentType(MediaType.APPLICATION_JSON).content(my_obj.toString()))
                 .andExpect(status().isOk()).andReturn();
 
-        mockMvc.perform(get("/api/v1/estado/get/sc").contentType(MediaType.APPLICATION_JSON).content(my_obj.toString()))
+        jdbcTemplate.update(
+                "INSERT INTO cidades (id,nome,populacao,custo_cidade_us,id_estado)VALUES ('cba3ff2e-3087-49bd-bc9b-285e809e7b32','Joinville',590400,1,0),('846e1a32-f831-4bee-a6bc-673b5f901d7b','Florianopolis',508826,2,0);");
+
+        MvcResult result = mockMvc
+                .perform(
+                        get("/api/v1/estado/get/sc").contentType(MediaType.APPLICATION_JSON).content(my_obj.toString()))
                 .andExpect(status().isOk()).andReturn();
+
+        Estado response = objectMapper.readValue(result.getResponse().getContentAsString(), Estado.class);
+        assertThat(response.getNome()).isEqualTo("Santa Catarina");
+        assertThat(response.getPopulacao()).isEqualTo(590400 + 508826);
+        assertThat(response.getCustoEstadoUs()).isEqualTo(3.0);
 
     }
 }
